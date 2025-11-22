@@ -3,7 +3,7 @@ name = "amiya"
 version = "0.1.0"
 authors = ["Zi Liang <zihaoliang0413@gmail.com>"]
 edition = "2024"
-include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
+include = ["**/*.rs", "Cargo.toml"]
 rust-version = "1.88"
 
 [package.metadata.docs.rs]
@@ -24,6 +24,7 @@ log = "0.4.27"
 
 # You only need serde if you want app persistence:
 serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.145"
 
 # native:
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
