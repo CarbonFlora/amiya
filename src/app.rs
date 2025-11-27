@@ -1,10 +1,11 @@
-use crate::landing::LandingPage;
+use crate::{landing::LandingPage, search_ribbon::SearchRibbon};
 
 /// We derive Deserialize/Serialize so we can persist app state on shutdown.
 #[derive(serde::Deserialize, serde::Serialize)]
 #[serde(default)] // if we add new fields, give them default values when deserializing old state
 pub struct TemplateApp {
     open_page: PageType,
+    search_ribbon: SearchRibbon,
     landing_page: LandingPage,
 }
 
@@ -15,8 +16,10 @@ pub enum PageType {
 
 impl Default for TemplateApp {
     fn default() -> Self {
+        let ribbon = SearchRibbon::default();
         let landing_page = LandingPage::default();
         Self {
+            search_ribbon: ribbon,
             open_page: PageType::LandingPage,
             landing_page,
         }
@@ -47,6 +50,7 @@ impl eframe::App for TemplateApp {
 
     /// Called each time the UI needs repainting, which may be many times per second.
     fn update(&mut self, ctx: &egui::Context, frame: &mut eframe::Frame) {
+        self.search_ribbon.update(ctx, frame);
         match self.open_page {
             PageType::LandingPage => self.landing_page.update(ctx, frame),
         }
